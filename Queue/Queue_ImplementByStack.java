@@ -1,3 +1,4 @@
+//Inspired by LeetCode question, a queue implemention using stack
 import java.util.Stack;
 //no pop or peek operations will be called on an empty queue
 public class Queue_ImplementByStack{

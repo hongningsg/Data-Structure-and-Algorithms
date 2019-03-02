@@ -1,3 +1,12 @@
+/*
+HashTable sturcture(HashMap in Java and C++) implemented using array.
+Maximum capacity of hash table is always 2 to the power of some number, and the "some number" is always no less than 4.
+Hash function as follow:
+        covert double and integer to String then sum ASCII of all character in the String then mod maximum capacity.
+put method will create node for input key and value or update value for a key if exist.
+delKey method will delete a key from Hash Table.
+free method will delete the HashTable and release memory.
+*/
 import java.util.ArrayList;
 import java.lang.math;
 class Pair<K, V> {

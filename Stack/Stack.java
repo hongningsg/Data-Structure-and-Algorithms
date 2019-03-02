@@ -1,3 +1,4 @@
+//stack implemented using ArrayList
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 public class Stack<E>{

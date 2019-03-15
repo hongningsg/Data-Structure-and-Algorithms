@@ -1,3 +1,4 @@
+package Sorting;
 //HeapSort takes O(nlogn) time and O(1) space
 //Build max heap and extract root element one by one with keeping it max heap!
 public class HeapSort{

@@ -1,3 +1,4 @@
+package Sorting;
 //MergeSort with O(n) space complexity and 0(nlogn) time complexity
 import java.util.Arrays;
 public void MergeSort(int[] arr){

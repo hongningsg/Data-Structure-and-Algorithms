@@ -1,3 +1,4 @@
+package Sorting;
 //QuickSort in O(nlogn) avg time (O(n) in best, O(n^2) in worst case) and O(1) space
 //choose pivot randomly
 import java.util.Arrays;

@@ -1,3 +1,10 @@
+//InsertionSort with O(n^2) time in average and O(1) space
+//usage:
+//      InsertionSort sorted = new InsertionSort();
+//      sorted(array); //use binary insertion sort
+//      sorted(array, false); //use linear search insertion sort, set true will trigger binary insertion sort
+//binary InsertionSort: stable O(logn) serch time
+//linear InsertionSort: not stable, best in O(1) but worst in 0(n) search time
 package Sorting;
 public class InsertionSort{
       public void sort(int[] arr){

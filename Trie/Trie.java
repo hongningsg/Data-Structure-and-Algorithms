@@ -40,6 +40,7 @@ public class Trie{
             }else{
                 TrieNode child = new TrieNode(c);
                 curr.children.put(c, child);
+                curr = child;
             }
         }
         curr.isLeaf = True;

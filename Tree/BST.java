@@ -1,7 +1,19 @@
+//create BST by:
+//   BST tree = new BST();
+//insert node by:
+//   tree.insert(int);
+//call size() and height() to get number of nodes in BST and height of BST
+//search(int) will return if given integer exist in BST
+//remove(int) will return true if an node was in BST and removed, false for it did not exist in BST
 package Tree;
 public class BST{
     private TreeNode root;
     private int TreeSize;
+
+    BST{
+        this.root = null;
+        this.TreeSize = 0;
+    }
 
     public void insert(int v){
         if (!this.root) {
@@ -77,6 +89,7 @@ public class BST{
         }else if( v > root.right){
             root.right = this.erase(root.right, v);
         }else{
+            this.TreeSize--;
             if (!root.left) {
                 return root.right;
             }else if (!root.right) return root. left;

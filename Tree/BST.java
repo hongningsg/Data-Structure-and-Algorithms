@@ -16,7 +16,7 @@ public class BST{
     }
 
     public void insert(int v){
-        if (!this.root) {
+        if (this.root == null) {
             this.root = new TreeNode(v);
             this.TreeSize++;
         }
@@ -50,7 +50,7 @@ public class BST{
     }
 
     private int _height(TreeNode root){
-        if (!root || (root.left == null && root.right == null)) {
+        if (root == null || (root.left == null && root.right == null)) {
             return 0;
         }
         int lh = this._height(root.left);
@@ -63,7 +63,7 @@ public class BST{
     }
 
     private boolean _search(TreeNode root, int v){
-        if (!root) {
+        if (root == null) {
             return false;
         }
         if (root.val == v) {
@@ -81,7 +81,7 @@ public class BST{
     }
 
     private TreeNode erase(TreeNode root, int v){
-        if (!root) {
+        if (root == null) {
             return null;
         }
         if (v < root.val) {

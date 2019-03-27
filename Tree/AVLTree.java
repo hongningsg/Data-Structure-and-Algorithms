@@ -93,13 +93,13 @@ public class AVLTree{
             }
         }else if (balance < -1) { //right heavy
             if (v < root.right.val) {
-//  z                            z                            x
-// / \                          / \                          /  \
-// T1   y   Right Rotate (y)    T1   x      Left Rotate(z)   z      y
-// / \  - - - - - - - - ->     /  \   - - - - - - - ->  / \    / \
-// x   T4                      T2   y                  T1  T2  T3  T4
-// / \                              /  \
-// T2   T3                           T3   T4
+  //    z                             z                             x
+  //   / \                          /  \                          /  \
+  //  T1   y   Right Rotate (y)    T1   x  Left Rotate(z)        z    y
+  //      / \  - - - - - - - - ->     /  \   - - - - - - - ->  / \   / \
+  //     x   T4                      T2   y                  T1  T2 T3  T4
+  //    / \                              / \
+  //   T2 T3                           T3  T4
                 root.right = this.rightRotate(root.right);
                 return this.leftRotate(root);
             }else{

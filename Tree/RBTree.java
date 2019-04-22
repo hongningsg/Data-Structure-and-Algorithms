@@ -31,7 +31,7 @@ public class RBTree<T extends Comparable<T>>{
     return this.sibling(node.parent);
   }
 
-  private RBTreeNode<T> rotateLeft(RBTreeNode<T> node){
+  private void rotateLeft(RBTreeNode<T> node){
     RBTreeNode<T> new_root = node.right;
     node.right = new_root.left;
     new_root.left = node;
@@ -39,10 +39,9 @@ public class RBTree<T extends Comparable<T>>{
     if (node.right != null) {
       node.right.parent = node;
     }
-    return new_root;
   }
 
-  private RBTreeNode<T> rotateRight(RBTreeNode<T> node){
+  private void rotateRight(RBTreeNode<T> node){
     RBTreeNode<T> new_root = node.left;
     node.left = new_root.right;
     new_root.right = node;
@@ -50,7 +49,6 @@ public class RBTree<T extends Comparable<T>>{
     if (node.left != null) {
       node.left.parent = node;l
     }
-    return new_root;
   }
 
   public T search(T value){
@@ -69,7 +67,8 @@ public class RBTree<T extends Comparable<T>>{
   }
 
   public void insert(T key){
-    this.add(this.root, key);
+    RBTreeNode<T> newnode = this.add(this.root, key);
+    this.insertFix(newnode);
   }
 
   private RBTreeNode<T> add(RBTreeNode curr,T key){
@@ -94,20 +93,31 @@ public class RBTree<T extends Comparable<T>>{
   private void insertFix(RBTreeNode<T> node){
     if (node.parent == null){
       node.color = black;
-      return node;
     }else if(node.parent.color == black){
-      return node;
     }else if(this.uncle(node) != null && this.uncle(node).color == red){
       this.uncle(node).color = black;
       node.parent.color = black;
       this.grandParent(node).color = red;
-      return node;
+      this.insertFix(this.grandParent(node));
     }else{
       RBTreeNode<T> grandParent = this.grandParent(node);
       RBTreeNode<T> parent = node.parent;
       if (parent.right == node && grandParent.left == parent){
-
+        rotateLeft(parent);
+        node = node.left;
+      }else if (parent.left == node && grandParent.right == parent){
+        rotateRight(node);
+        node = node.right;
       }
+      grandParent = this.grandParent(node);
+      parent = node.parent;
+      if (parent.left == node) {
+        rotateRight(grandParent);
+      }else{
+        rotateLeft(grandParent);
+      }
+      parent.color = black;
+      grandParent.color = red;
     }
   }
 }

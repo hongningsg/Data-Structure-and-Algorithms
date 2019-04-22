@@ -91,7 +91,7 @@ public class RBTree<T extends Comparable<T>>{
     insertFix(curr);
   }
 
-  private insertFix(RBTreeNode<T> node){
+  private RBTreeNode<T> insertFix(RBTreeNode<T> node){
 
   }
 }

@@ -88,10 +88,26 @@ public class RBTree<T extends Comparable<T>>{
     }else{
       return curr;
     }
-    insertFix(curr);
+    return curr;
   }
 
-  private RBTreeNode<T> insertFix(RBTreeNode<T> node){
+  private void insertFix(RBTreeNode<T> node){
+    if (node.parent == null){
+      node.color = black;
+      return node;
+    }else if(node.parent.color == black){
+      return node;
+    }else if(this.uncle(node) != null && this.uncle(node).color == red){
+      this.uncle(node).color = black;
+      node.parent.color = black;
+      this.grandParent(node).color = red;
+      return node;
+    }else{
+      RBTreeNode<T> grandParent = this.grandParent(node);
+      RBTreeNode<T> parent = node.parent;
+      if (parent.right == node && grandParent.left == parent){
 
+      }
+    }
   }
 }

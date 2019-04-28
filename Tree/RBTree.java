@@ -60,7 +60,7 @@ public class RBTree<T extends Comparable<T>>{
       }else if(compare_val > 0){
         curr = curr.left;
       }else{
-        return curr.value;
+        return curr;
       }
     }
     return null;
@@ -118,6 +118,79 @@ public class RBTree<T extends Comparable<T>>{
       }
       parent.color = black;
       grandParent.color = red;
+    }
+  }
+
+  public void remove(T key){
+      RBTreeNode node = this.search(key);
+      if (node != null){
+        this._remove(node);
+      }
+  }
+
+  private void _remove(RBTreeNode node){
+    if (node.left != null && node.right != null) {
+      RBTreeNode curr = node.right;
+      while (curr.left != null){
+        curr = curr.left;
+      }
+      if (node.parent != null) {
+        RBTreeNode p = node.parent;
+        if (p.left == node){
+          p.left = curr;
+        }else{
+          p.right = curr;
+        }
+      }else{
+        this.root = curr;
+      }
+      RBTreeNode successor = curr.right;
+      RBTreeNode predecessor = curr.parent;
+      if (node == predecessor) {
+        predecessor = curr;
+      }else{
+        if (successor != null) {
+          successor.parent = predecessor;
+        }
+        predecessor.left = successor;
+        curr.right = node.right;
+        node.right.parent = curr;
+      }
+      curr.parent = node.parent;
+      boolean oldcolor = curr.color;
+      curr.color = node.color;
+      curr.left = node.left;
+      node.left.parent = curr;
+      if (oldcolor == black) {
+        removeFix(successor, predecessor);
+      }
+    }
+    else{
+      RBTreeNode successor;
+      RBTreeNode predecessor;
+      if (node.left != null) {
+        successor = node.left;
+      }else{
+        successor = node.right;
+      }
+      predecessor = node.parent;
+      boolean oldcolor = node.color;
+      if (successor != null) {
+        successor.parent = predecessor;
+      }
+      if (predecessor != null){
+          if (predecessor.left == node){
+              predecessor.left = successor;
+          } else {
+              predecessor.right = successor;
+          }
+      } else {
+          this.root = successor;
+      }
+
+      if (oldcolor == black){
+          removeFix(successor, predecessor);
+      }
     }
   }
 }

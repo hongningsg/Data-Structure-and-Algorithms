@@ -122,20 +122,20 @@ public class RBTree<T extends Comparable<T>>{
   }
 
   public void remove(T key){
-      RBTreeNode node = this.search(key);
+      RBTreeNode<T> node = this.search(key);
       if (node != null){
         this._remove(node);
       }
   }
 
-  private void _remove(RBTreeNode node){
+  private void _remove(RBTreeNode<T> node){
     if (node.left != null && node.right != null) {
-      RBTreeNode curr = node.right;
+      RBTreeNode<T> curr = node.right;
       while (curr.left != null){
         curr = curr.left;
       }
       if (node.parent != null) {
-        RBTreeNode p = node.parent;
+        RBTreeNode<T> p = node.parent;
         if (p.left == node){
           p.left = curr;
         }else{
@@ -144,8 +144,8 @@ public class RBTree<T extends Comparable<T>>{
       }else{
         this.root = curr;
       }
-      RBTreeNode successor = curr.right;
-      RBTreeNode predecessor = curr.parent;
+      RBTreeNode<T> successor = curr.right;
+      RBTreeNode<T> predecessor = curr.parent;
       if (node == predecessor) {
         predecessor = curr;
       }else{
@@ -166,8 +166,8 @@ public class RBTree<T extends Comparable<T>>{
       }
     }
     else{
-      RBTreeNode successor;
-      RBTreeNode predecessor;
+      RBTreeNode<T> successor;
+      RBTreeNode<T> predecessor;
       if (node.left != null) {
         successor = node.left;
       }else{
@@ -192,5 +192,70 @@ public class RBTree<T extends Comparable<T>>{
           removeFix(successor, predecessor);
       }
     }
+  }
+
+  private void removeFix(RBTreeNode<T> node, RBTreeNode<T> predecessor){
+    RBTreeNode<T> tmpNode;
+    while ((node == null|| node.color == black) && (node != this.root) ){
+      if (predecessor.left == node){
+          tmpNode = predecessor.right;
+          if (tmpNode.color == red){
+              tmpNode.color = black;
+              predecessor.color = red;
+              this.rotateLeft(predecessor);
+              tmpNode = predecessor.right;
+          }
+          if ((tmpNode.left == null || tmpNode.left.color == black) &&
+                  (tmpNode.right == null || tmpNode.right.color == black)){
+              tmpNode.color = red;
+              node = predecessor;
+              predecessor = node.parent;
+          } else {
+              if (tmpNode.right == null || tmpNode.right.color == black){
+                  tmpNode.left.color = black;
+                  tmpNode.color = red;
+                  this.rotateRight(tmpNode);
+                  tmpNode = predecessor.right;
+              }
+              tmpNode.color = predecessor.color;
+              predecessor.color = black;
+              tmpNode.right.color = black;
+              this.rotateLeft(predecessor);
+              node = this.root;
+              break;
+          }
+      } else {
+          tmpNode = predecessor.left;
+          if (tmpNode.color == black){
+              tmpNode.color = black;
+              predecessor.color = black;
+              this.rotateRight(predecessor);
+              tmpNode = predecessor.left;
+          }
+
+          if ((tmpNode.left == null || tmpNode.left.color == black) &&
+                  (tmpNode.right == null|| tmpNode.right.color == black)){
+              tmpNode.color = red;
+              node = predecessor;
+              parent =node.parent;
+          } else {
+              if (tmpNode.left == null || tmpNode.left.color == black){
+                  tmpNode.right.color = black;
+                  tmpNode.color = red;
+                  this.rotateLeft(tmpNode);
+                  tmpNode = predecessor.left;
+              }
+
+              tmpNode.color = predecessor.color;
+              predecessor.color = black;
+              tmpNode.left.color = black;
+              this.rotateLeft(predecessor);
+              node = this.root;
+              break;
+          }
+      }
+    }
+    if (node != null)
+      node.color = black;
   }
 }
